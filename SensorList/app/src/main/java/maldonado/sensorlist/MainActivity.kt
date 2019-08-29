@@ -15,12 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
-import android.support.v4.app.SupportActivity
-import android.support.v4.app.SupportActivity.ExtraData
-import android.support.v4.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.view.View
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -66,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                 val clickedValue = listSensorItems[position].toString()
 
                 if(clickedValue == "3-axis Accelerometer sensor"){
-                    val intent = Intent(this@MainActivity, AccelerometerActivity::class.java)
+                    intent = Intent(this@MainActivity, AccelerometerActivity::class.java)
                     startActivity(intent)
                 }
                 else if(clickedValue == "Light sensor"){
@@ -75,6 +70,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 else if(clickedValue == "Proximity sensor"){
                     intent = Intent(this@MainActivity, ProximityActivity::class.java)
+                    startActivity(intent)
+                }
+                else if(clickedValue == "3-axis Magnetic field sensor"){
+                    intent = Intent(this@MainActivity, MagneticActivity::class.java)
                     startActivity(intent)
                 }
             }
