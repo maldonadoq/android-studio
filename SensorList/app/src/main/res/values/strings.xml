@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Sensor List</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_accelerometer">Accelerometer Sensor</string>
+    <string name="title_activity_light">Light Sensor</string>
+    <string name="title_activity_proximity">Proximity Sensor</string>
 </resources>
