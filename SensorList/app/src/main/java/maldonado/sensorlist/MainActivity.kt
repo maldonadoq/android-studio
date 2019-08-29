@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         /*Find Sensor View on Resources*/
         listView = findViewById(R.id.sensor_list_view)
 
-
+        // List of all name sensors (string)
         val listSensorItems = arrayOfNulls<String>(deviceSensors.size)
 
         for (i in 0 until deviceSensors.size) {
@@ -64,11 +64,19 @@ class MainActivity : AppCompatActivity() {
             ) {
                 // Getting listView click value into String variable.
                 val clickedValue = listSensorItems[position].toString()
-                val intent = Intent(this@MainActivity, SecondActivity::class.java)
 
-                // Sending value to another activity using intent.
-                intent.putExtra("ListViewClickedValue", clickedValue)
-                startActivity(intent)
+                if(clickedValue == "3-axis Accelerometer sensor"){
+                    val intent = Intent(this@MainActivity, AccelerometerActivity::class.java)
+                    startActivity(intent)
+                }
+                else if(clickedValue == "Light sensor"){
+                    intent = Intent(this@MainActivity, LightActivity::class.java)
+                    startActivity(intent)
+                }
+                else if(clickedValue == "Proximity sensor"){
+                    intent = Intent(this@MainActivity, ProximityActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
     }
