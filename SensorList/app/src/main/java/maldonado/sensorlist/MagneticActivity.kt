@@ -7,6 +7,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Vibrator
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_magnetic.*
 import kotlin.math.sqrt
@@ -16,6 +17,7 @@ class MagneticActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var textView: TextView
     private lateinit var sensorManager: SensorManager
     private lateinit var sensor: Sensor
+    private lateinit var vibrator: Vibrator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +26,8 @@ class MagneticActivity : AppCompatActivity(), SensorEventListener {
 
         textView = findViewById(R.id.magnetic_text)
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
         sensorManager.registerListener(
             this,
             sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
@@ -39,6 +43,10 @@ class MagneticActivity : AppCompatActivity(), SensorEventListener {
         sensor = event!!.sensor
         var mvalue = sqrt(event.values[0].pow(2) + event.values[1].pow(2) + event.values[2].pow(2))
 
-        textView.text = "Microtesla: ${mvalue} mt"
+        if(mvalue > 100){
+            vibrator.vibrate(100)
+        }
+
+        textView.text = "MicroTesla: ${mvalue} ut"
     }
 }
