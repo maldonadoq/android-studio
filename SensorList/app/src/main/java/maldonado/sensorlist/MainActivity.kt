@@ -68,12 +68,12 @@ class MainActivity : AppCompatActivity() {
                     intent = Intent(this@MainActivity, LightActivity::class.java)
                     startActivity(intent)
                 }
-                else if(clickedValue == "Proximity sensor"){
-                    intent = Intent(this@MainActivity, ProximityActivity::class.java)
-                    startActivity(intent)
-                }
                 else if(clickedValue == "3-axis Magnetic field sensor"){
                     intent = Intent(this@MainActivity, MagneticActivity::class.java)
+                    startActivity(intent)
+                }
+                else if(clickedValue == "Orientation sensor"){
+                    intent = Intent(this@MainActivity, OrientationActivity::class.java)
                     startActivity(intent)
                 }
             }

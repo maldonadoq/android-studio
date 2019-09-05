@@ -10,13 +10,12 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
+                android:name=".OrientationActivity"
+                android:label="@string/title_activity_orientation"
+                android:theme="@style/AppTheme.NoActionBar" />
+        <activity
                 android:name=".MagneticActivity"
                 android:label="@string/title_activity_magnetic"
-                android:theme="@style/AppTheme.NoActionBar" />
-                />
-        <activity
-                android:name=".ProximityActivity"
-                android:label="@string/title_activity_proximity"
                 android:theme="@style/AppTheme.NoActionBar" />
         <activity
                 android:name=".LightActivity"

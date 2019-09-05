@@ -14,6 +14,7 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_light.*
 import org.w3c.dom.Text
 import java.lang.reflect.Field
+import kotlin.math.abs
 
 class LightActivity : AppCompatActivity(), SensorEventListener {
     // private lateinit var listView: ListView
@@ -49,5 +50,23 @@ class LightActivity : AppCompatActivity(), SensorEventListener {
     override fun onSensorChanged(event: SensorEvent?) {
         sensor = event!!.sensor
         textView.text = "Light: ${event.values[0]}"
+
+        /*var mLight = event.values[0]
+
+        var textLight = "Before Light: ${tLight}\n\n" +
+                        "Current Light: ${mLight}\n\n" +
+                        "Count: ${tCount}\n\n"
+
+        var lost = tLight/2
+        if (abs(mLight-tLight) > lost){
+            textLight += "Yes"
+            tCount++
+        }
+        else{
+            textLight += "No"
+        }
+
+        textView.text = textLight
+        tLight = mLight*/
     }
 }
