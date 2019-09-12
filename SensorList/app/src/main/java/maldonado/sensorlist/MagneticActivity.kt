@@ -12,6 +12,12 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_magnetic.*
 import kotlin.math.sqrt
 import kotlin.math.pow
+import android.support.v4.app.SupportActivity
+import android.support.v4.app.SupportActivity.ExtraData
+import android.support.v4.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 class MagneticActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var textView: TextView
@@ -27,12 +33,6 @@ class MagneticActivity : AppCompatActivity(), SensorEventListener {
         textView = findViewById(R.id.magnetic_text)
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-
-        sensorManager.registerListener(
-            this,
-            sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
-            SensorManager.SENSOR_DELAY_NORMAL
-        )
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
@@ -43,10 +43,25 @@ class MagneticActivity : AppCompatActivity(), SensorEventListener {
         sensor = event!!.sensor
         var mvalue = sqrt(event.values[0].pow(2) + event.values[1].pow(2) + event.values[2].pow(2))
 
-        if(mvalue > 100){
+        if(mvalue > 50){
             vibrator.vibrate(100)
         }
 
         textView.text = "MicroTesla: ${mvalue} ut"
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sensorManager.registerListener(
+            this,
+            sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
+            SensorManager.SENSOR_DELAY_NORMAL
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sensorManager.unregisterListener(this)
+
     }
 }
