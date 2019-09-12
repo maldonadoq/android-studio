@@ -29,12 +29,6 @@ class LightActivity : AppCompatActivity(), SensorEventListener {
         setSupportActionBar(light_toolbar)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        sensorManager.registerListener(
-            this,
-            sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
-            SensorManager.SENSOR_DELAY_NORMAL
-        )
-
         /*val songList = arrayOf("Song 1", "Song 2", "Song 3", "Song 4", "Song 5")
         listView = findViewById(R.id.song_list_view)
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, songList)
@@ -68,5 +62,20 @@ class LightActivity : AppCompatActivity(), SensorEventListener {
 
         textView.text = textLight
         tLight = mLight*/
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sensorManager.registerListener(
+            this,
+            sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
+            SensorManager.SENSOR_DELAY_NORMAL
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sensorManager.unregisterListener(this)
+
     }
 }
