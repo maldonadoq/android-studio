@@ -5,22 +5,12 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.opengl.Matrix
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_orientation.*
 import kotlin.math.round
-import android.R.attr.pivotY
-import android.R.attr.pivotX
-import android.R.attr.angle
-import android.support.v4.app.SupportActivity
-import android.support.v4.app.SupportActivity.ExtraData
-import android.support.v4.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-
 
 class OrientationActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var textView: TextView
@@ -35,12 +25,6 @@ class OrientationActivity : AppCompatActivity(), SensorEventListener {
         setSupportActionBar(orientation_toolbar)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        sensorManager.registerListener(
-            this,
-            sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
-            SensorManager.SENSOR_DELAY_NORMAL
-        )
-
         textView = findViewById(R.id.orientation_text)
         imageView = findViewById(R.id.compass_back)
     }
@@ -56,5 +40,20 @@ class OrientationActivity : AppCompatActivity(), SensorEventListener {
         imageView.setRotation(360-degree)
 
         textView.text = "Degree: ${degree}"
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sensorManager.registerListener(
+            this,
+            sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
+            SensorManager.SENSOR_DELAY_NORMAL
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sensorManager.unregisterListener(this)
+
     }
 }
