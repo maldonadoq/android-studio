@@ -45,28 +45,52 @@ class AccelerometerActivity : AppCompatActivity(), SensorEventListener {
     override fun onSensorChanged(event: SensorEvent?) {
         sensor = event!!.sensor
 
-        mAccelLast = mAccelCurrent
-        mAccelCurrent = sqrt(event.values[0].pow(2) + event.values[1].pow(2) + event.values[2].pow(2))
-        val mDelta = mAccelCurrent - mAccelLast
+        //mAccelLast = mAccelCurrent
+        //mAccelCurrent = sqrt(event.values[0].pow(2) + event.values[1].pow(2) + event.values[2].pow(2))
+        //val mDelta = mAccelCurrent - mAccelLast
+
+        textView.text = "X: ${event.values[0]}\n\n" +
+                "Y: ${event.values[1]}\n\n" +
+                "Z: ${event.values[2]}\n\n"
 
         // textView.text = "${mDelta}"
 
-        if (mDelta > 2.5) {
+        var sigma = 3
+
+        if(event.values[0] > sigma){
+            val i = Intent("com.android.music.musicservicecommand")
+            i.putExtra("command", "play")
+            this@AccelerometerActivity.sendBroadcast(i)
+        }
+        else if(event.values[0] < -sigma){
+            val i = Intent("com.android.music.musicservicecommand")
+            i.putExtra("command", "pause")
+            this@AccelerometerActivity.sendBroadcast(i)
+        }
+        else if(event.values[1] > sigma){
+            val i = Intent("com.android.music.musicservicecommand")
+            i.putExtra("command", "next")
+            this@AccelerometerActivity.sendBroadcast(i)
+        }
+        else if(event.values[1] < -sigma){
+            val i = Intent("com.android.music.musicservicecommand")
+            i.putExtra("command", "previous")
+            this@AccelerometerActivity.sendBroadcast(i)
+        }
+
+        /*if (mDelta > 2.5) {
             val rnd = Random()
             val color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
             textView.setTextColor(color)
 
             if (audioManager.isMusicActive) {
-                val i = Intent("com.android.music.musicservicecommand")
-                i.putExtra("command", "pause")
-                this@AccelerometerActivity.sendBroadcast(i)
             }
             else{
                 val i = Intent("com.android.music.musicservicecommand")
                 i.putExtra("command", "play")
                 this@AccelerometerActivity.sendBroadcast(i)
             }
-        }
+        }*/
     }
 
     override fun onResume() {
