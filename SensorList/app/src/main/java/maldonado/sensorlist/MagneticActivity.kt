@@ -43,7 +43,7 @@ class MagneticActivity : AppCompatActivity(), SensorEventListener {
         sensor = event!!.sensor
         var mvalue = sqrt(event.values[0].pow(2) + event.values[1].pow(2) + event.values[2].pow(2))
 
-        if(mvalue > 50){
+        if(mvalue > 60){
             vibrator.vibrate(100)
         }
 
