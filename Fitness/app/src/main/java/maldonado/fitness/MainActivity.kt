@@ -30,13 +30,18 @@ class MainActivity : AppCompatActivity() {
                     .setAction("Action", null).show()
         }
 
-        var button_one = findViewById<Button>(R.id.button_one)
+        var button_one = findViewById<Button>(R.id.btnPlank)
+        var button_two = findViewById<Button>(R.id.btnStep)
 
         button_one.setOnClickListener{
             intent = Intent(this@MainActivity, PlankActivity::class.java)
             startActivity(intent)
         }
 
+        button_two.setOnClickListener{
+            intent = Intent(this@MainActivity, StepCountActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
