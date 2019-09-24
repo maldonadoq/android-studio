@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         var button_one = findViewById<Button>(R.id.btnPlank)
         var button_two = findViewById<Button>(R.id.btnStep)
+        var button_four = findViewById<Button>(R.id.btnPlot)
 
         button_one.setOnClickListener{
             intent = Intent(this@MainActivity, PlankActivity::class.java)
@@ -40,6 +41,11 @@ class MainActivity : AppCompatActivity() {
 
         button_two.setOnClickListener{
             intent = Intent(this@MainActivity, StepCountActivity::class.java)
+            startActivity(intent)
+        }
+
+        button_four.setOnClickListener{
+            intent = Intent(this@MainActivity, PlotActivity::class.java)
             startActivity(intent)
         }
     }
