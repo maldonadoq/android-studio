@@ -35,13 +35,13 @@
             android:textColor="@color/colorPrimary" />
 
         <Button
-            android:id="@+id/btnThree"
+            android:id="@+id/btnHand"
             android:layout_width="280dp"
             android:layout_height="50dp"
             android:layout_gravity="bottom|center"
             android:layout_marginTop="10dp"
             android:background="@drawable/ic_button_stylex"
-            android:text="@string/third"
+            android:text="@string/hand"
             android:textColor="@color/colorPrimary" />
 
         <Button

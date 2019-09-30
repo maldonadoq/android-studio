@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_app_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PlotActivity"></activity>
+        <activity android:name=".HandActivity"></activity>
+        <activity android:name=".PlotActivity" />
         <activity android:name=".StepCountActivity" />
         <activity android:name=".PlankActivity" />
         <activity
