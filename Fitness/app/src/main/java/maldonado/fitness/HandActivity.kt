@@ -40,7 +40,7 @@ class HandActivity : AppCompatActivity(), SensorEventListener {
 
     override fun onResume() {
         super.onResume()
-        var stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
+        val stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
 
         if(stepSensor == null){
             Toast.makeText(

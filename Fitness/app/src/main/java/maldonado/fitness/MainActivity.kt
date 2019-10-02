@@ -8,15 +8,7 @@ import android.view.MenuItem
 import android.widget.Button
 
 import kotlinx.android.synthetic.main.activity_main.*
-import android.R.attr.button
 import android.content.Intent
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.view.View
-import android.widget.Toast
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,27 +22,27 @@ class MainActivity : AppCompatActivity() {
                     .setAction("Action", null).show()
         }
 
-        var button_one = findViewById<Button>(R.id.btnPlank)
-        var button_two = findViewById<Button>(R.id.btnStep)
-        var button_three = findViewById<Button>(R.id.btnHand)
-        var button_four = findViewById<Button>(R.id.btnPlot)
+        val buttonOne = findViewById<Button>(R.id.btnPlank)
+        val buttonTwo = findViewById<Button>(R.id.btnStep)
+        val buttonThree = findViewById<Button>(R.id.btnHand)
+        val buttonFour = findViewById<Button>(R.id.btnPlot)
 
-        button_one.setOnClickListener{
+        buttonOne.setOnClickListener{
             intent = Intent(this@MainActivity, PlankActivity::class.java)
             startActivity(intent)
         }
 
-        button_two.setOnClickListener{
+        buttonTwo.setOnClickListener{
             intent = Intent(this@MainActivity, StepCountActivity::class.java)
             startActivity(intent)
         }
 
-        button_three.setOnClickListener{
+        buttonThree.setOnClickListener{
             intent = Intent(this@MainActivity, HandActivity::class.java)
             startActivity(intent)
         }
 
-        button_four.setOnClickListener{
+        buttonFour.setOnClickListener{
             intent = Intent(this@MainActivity, PlotActivity::class.java)
             startActivity(intent)
         }

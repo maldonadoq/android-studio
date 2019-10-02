@@ -21,16 +21,15 @@ class StepCountActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var sensorManager: SensorManager
     private val mSmoothing = 20
-    private var mRawAccelerometerValues = FloatArray(3)
 
     // mSmoothing accelerometer signal variables
-    private var mAccelerometerValueHistory = Array(3) { FloatArray(mSmoothing) }
-    private var mRunningAccelerometerTotal = FloatArray(3)
-    private var mCurAccelerometerAvg = FloatArray(3)
-    private var mCurReadIndex = 0
+    private var mHistory = Array(3) { FloatArray(mSmoothing) }
+    private var mRunning = FloatArray(3)
+    private var mAvg = FloatArray(3)
+    private var mIdx = 0
     private var mStepCounter = 0
 
-    private var mGraph2LastXValue = 0.0f
+    private var mGraphLastX = 0.0f
 
     private var mSeries: LineGraphSeries<DataPoint>? = null
 
@@ -42,7 +41,7 @@ class StepCountActivity : AppCompatActivity(), SensorEventListener {
     private var lastXPoint = 1.0
     private var stepThreshold = 1.0
     private var noiseThreshold = 2.0
-    private val windowSize = 10
+    private val windowSize = 20
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,25 +60,26 @@ class StepCountActivity : AppCompatActivity(), SensorEventListener {
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
-        mRawAccelerometerValues = event!!.values
-        lastMag = sqrt(mRawAccelerometerValues[0].pow(2) + mRawAccelerometerValues[1].pow(2) + mRawAccelerometerValues[2].pow(2))
+        lastMag = sqrt(event!!.values[0].pow(2) + event.values[1].pow(2) +
+                event.values[2].pow(2))
 
         for (i in 0..2) {
-            mRunningAccelerometerTotal[i] = mRunningAccelerometerTotal[i] - mAccelerometerValueHistory[i][mCurReadIndex]
-            mAccelerometerValueHistory[i][mCurReadIndex] = mRawAccelerometerValues[i]
-            mRunningAccelerometerTotal[i] = mRunningAccelerometerTotal[i] + mAccelerometerValueHistory[i][mCurReadIndex]
-            mCurAccelerometerAvg[i] = mRunningAccelerometerTotal[i] / mSmoothing
+            mRunning[i] = mRunning[i] - mHistory[i][mIdx]
+            mHistory[i][mIdx] = event.values[i]
+            mRunning[i] = mRunning[i] + mHistory[i][mIdx]
+            mAvg[i] = mRunning[i] / mSmoothing
         }
-        mCurReadIndex++
-        if (mCurReadIndex >= mSmoothing) {
-            mCurReadIndex = 0
+        mIdx++
+        if (mIdx >= mSmoothing) {
+            mIdx = 0
         }
 
-        avgMag = sqrt(mCurAccelerometerAvg[0].pow(2) + mCurAccelerometerAvg[1].pow(2) + mCurAccelerometerAvg[2].pow(2))
+        avgMag = sqrt(mAvg[0].pow(2) + mAvg[1].pow(2) + mAvg[2].pow(2))
         netMag = lastMag - avgMag
 
-        mGraph2LastXValue += 1.0f
-        mSeries!!.appendData(DataPoint(mGraph2LastXValue.toDouble(), netMag.toDouble()), true, 100)
+        mGraphLastX += 1.0f
+        mSeries!!.appendData(DataPoint(mGraphLastX.toDouble(), netMag.toDouble()), true,
+            60)
 
         peakDetection()
 
@@ -107,7 +107,8 @@ class StepCountActivity : AppCompatActivity(), SensorEventListener {
                 val forwardSlope = dataPointList[i + 1].y - dataPointList[i].y
                 val downwardSlope = dataPointList[i].y - dataPointList[i - 1].y
 
-                if (forwardSlope < 0 && downwardSlope > 0 && dataPointList[i].y > stepThreshold && dataPointList[i].y < noiseThreshold) {
+                if (forwardSlope < 0 && downwardSlope > 0 && dataPointList[i].y > stepThreshold
+                    && dataPointList[i].y < noiseThreshold) {
                     mStepCounter += 1
                 }
             }
@@ -133,10 +134,9 @@ class StepCountActivity : AppCompatActivity(), SensorEventListener {
         }
     }
 
-    override fun onPause() {
+    /*override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(this)
-
-    }
+    }*/
 
 }
