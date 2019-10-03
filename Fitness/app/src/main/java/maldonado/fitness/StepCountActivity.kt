@@ -134,9 +134,9 @@ class StepCountActivity : AppCompatActivity(), SensorEventListener {
         }
     }
 
-    /*override fun onPause() {
+    override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(this)
-    }*/
+    }
 
 }
