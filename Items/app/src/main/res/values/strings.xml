@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Items</string>
+    <string name="action_settings">Settings</string>
+    <string name="add_item">Add Items</string>
+    <string name="name">Item Name</string>
+    <string name="counter">Counter: 0</string>
+</resources>
